@@ -1,0 +1,43 @@
+name: Render Hyperframes Video
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Verify environment
+        run: |
+          node -v
+          npm -v
+          ffmpeg -version | head -n 1
+
+      - name: Render video
+        working-directory: my-video
+        run: npx --yes hyperframes@0.8.199 render -o ../output/video.mp4
+
+      - name: Upload rendered video
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-video
+          path: output/video.mp4
+          retention-days: 30
+          if-no-files-found: error

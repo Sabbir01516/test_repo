@@ -1,0 +1,20 @@
+# Node
+node_modules/
+
+# Hyperframes build artifacts
+renders/
+output/
+.hyperframes/
+
+# Large binary files (use Git LFS or re-generate)
+hyperframes_project.zip
+hyperframes_video.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+my-video/assets/audio.wav

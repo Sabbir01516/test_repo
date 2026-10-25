@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>AETHER X1 - Product Intro</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg-deep: #030712;
+        --accent-cyan: #38bdf8;
+        --accent-violet: #a855f7;
+        --accent-emerald: #34d399;
+        --ink-primary: #f8fafc;
+        --ink-secondary: #94a3b8;
+        --card-bg: rgba(15, 23, 42, 0.65);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background-color: var(--bg-deep);
+        font-family: var(--font-family);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 40%, #0f172a 0%, #030712 100%);
+      }
+
+      /* Ambient Light Orbs */
+      .orb-glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        pointer-events: none;
+        opacity: 0.2;
+      }
+
+      #orb-1 {
+        width: 700px;
+        height: 700px;
+        top: -150px;
+        left: 20%;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.5) 0%, rgba(56, 189, 248, 0) 70%);
+      }
+
+      #orb-2 {
+        width: 800px;
+        height: 800px;
+        bottom: -200px;
+        right: 15%;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, rgba(168, 85, 247, 0) 70%);
+      }
+
+      /* Subtle Tech Grid */
+      .grid-overlay {
+        position: absolute;
+        inset: 0;
+        background-image: 
+          linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 80px 80px;
+        mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 80%);
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 80%);
+        pointer-events: none;
+      }
+
+      /* Main Stage Content */
+      .stage {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px;
+        z-index: 10;
+      }
+
+      /* Badge Pill */
+      .badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 24px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--card-border);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        margin-bottom: 28px;
+        opacity: 0;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-cyan);
+        box-shadow: 0 0 12px var(--accent-cyan);
+      }
+
+      .badge-text {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent-cyan);
+      }
+
+      /* Product Title */
+      #product-title {
+        font-size: 110px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+        color: var(--ink-primary);
+        background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        margin-bottom: 20px;
+        opacity: 0;
+      }
+
+      /* Subtitle */
+      #subtitle {
+        font-size: 32px;
+        font-weight: 400;
+        color: var(--ink-secondary);
+        max-width: 900px;
+        line-height: 1.5;
+        letter-spacing: -0.01em;
+        margin-bottom: 48px;
+        opacity: 0;
+      }
+
+      /* Feature Cards Row */
+      .features-row {
+        display: flex;
+        gap: 28px;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .feature-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        padding: 18px 32px;
+        border-radius: 20px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        opacity: 0;
+      }
+
+      .feature-icon {
+        font-size: 26px;
+      }
+
+      .feature-label {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--ink-primary);
+        letter-spacing: 0.02em;
+      }
+
+      .feature-sub {
+        font-size: 13px;
+        color: var(--ink-secondary);
+        font-weight: 400;
+      }
+
+      /* CTA Outro Container */
+      #cta-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        margin-top: 10px;
+        opacity: 0;
+      }
+
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 18px 48px;
+        border-radius: 9999px;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #030712;
+        background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%);
+        box-shadow: 0 0 35px rgba(56, 189, 248, 0.45);
+        border: none;
+      }
+
+      .cta-url {
+        font-size: 16px;
+        color: var(--ink-secondary);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      class="clip"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="10"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Background Audio (10 Seconds Ambient Synth Intro) -->
+      <audio
+        id="bg-music"
+        src="assets/audio.wav"
+        data-start="0"
+        data-duration="10"
+        data-volume="0.8"
+        data-fade-in="1.0"
+        data-fade-out="1.5"
+      ></audio>
+
+      <!-- Background Ambient Glows -->
+      <div id="orb-1" class="orb-glow"></div>
+      <div id="orb-2" class="orb-glow"></div>
+      <div class="grid-overlay"></div>
+
+      <!-- Main Stage Elements -->
+      <div class="stage">
+        <!-- Top Pill Badge -->
+        <div id="badge-pill" class="badge-pill">
+          <div class="status-dot"></div>
+          <span class="badge-text">Next-Gen Architecture &bull; 2026</span>
+        </div>
+
+        <!-- Product Title (Fade-in with Smooth Scale & Blur Reveal) -->
+        <h1 id="product-title">AETHER X1</h1>
+
+        <!-- Subtitle -->
+        <p id="subtitle">Crafted with Precision. Powered by Boundless Intelligence.</p>
+
+        <!-- Feature Spec Badges -->
+        <div class="features-row">
+          <div class="feature-card" id="feat-1">
+            <span class="feature-icon">&#x26A1;</span>
+            <div style="text-align: left;">
+              <div class="feature-label">Quantum Core 3</div>
+              <div class="feature-sub">128-Core Neural Engine</div>
+            </div>
+          </div>
+          <div class="feature-card" id="feat-2">
+            <span class="feature-icon">&#x1F48E;</span>
+            <div style="text-align: left;">
+              <div class="feature-label">Titanium Unibody</div>
+              <div class="feature-sub">Aerospace Grade 5 Alloy</div>
+            </div>
+          </div>
+          <div class="feature-card" id="feat-3">
+            <span class="feature-icon">&#x1F50B;</span>
+            <div style="text-align: left;">
+              <div class="feature-label">All-Day Flow</div>
+              <div class="feature-sub">72-Hour Sustained Power</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final Call to Action -->
+        <div id="cta-container">
+          <div class="cta-button">Pre-Order Now</div>
+          <span class="cta-url">discover &bull; aether-ultra.tech</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Initialize GSAP Timeline in paused state (as required by Hyperframes)
+      const tl = gsap.timeline({ paused: true });
+
+      // 1. Ambient Atmosphere Awakening (0.0s - 2.5s)
+      tl.fromTo("#orb-1", { scale: 0.8, opacity: 0.2 }, { scale: 1.15, opacity: 0.45, duration: 2.2, ease: "sine.out" }, 0)
+        .fromTo("#orb-2", { scale: 0.8, opacity: 0.2 }, { scale: 1.2, opacity: 0.4, duration: 2.5, ease: "sine.out" }, 0.2);
+
+      // 2. Category Badge Reveal (0.6s - 1.6s)
+      tl.fromTo("#badge-pill", {
+        opacity: 0,
+        y: -25
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 1.0,
+        ease: "power3.out"
+      }, 0.6);
+
+      // 3. Hero Title Cinematic Fade-in & Unblur (1.2s - 3.2s)
+      tl.fromTo("#product-title", {
+        opacity: 0,
+        y: 50,
+        scale: 0.94,
+        filter: "blur(14px)"
+      }, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 1.8,
+        ease: "power4.out"
+      }, 1.2);
+
+      // 4. Subtitle Smooth Reveal (2.4s - 3.8s)
+      tl.fromTo("#subtitle", {
+        opacity: 0,
+        y: 25
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power3.out"
+      }, 2.4);
+
+      // 5. Feature Cards Staggered Inflow (3.8s - 5.4s)
+      tl.fromTo(".feature-card", {
+        opacity: 0,
+        y: 35,
+        scale: 0.9
+      }, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        stagger: 0.22,
+        duration: 0.85,
+        ease: "back.out(1.4)"
+      }, 3.8);
+
+      // 6. Middle Transition: Features and Subtitle Graceful Exit (6.8s - 7.6s)
+      tl.to([".feature-card", "#subtitle"], {
+        opacity: 0,
+        y: -20,
+        stagger: 0.08,
+        duration: 0.65,
+        ease: "power2.in"
+      }, 6.8);
+
+      // 7. Outro CTA Presentation & Title Shift (7.2s - 9.4s)
+      tl.to("#product-title", {
+        scale: 1.05,
+        duration: 2.2,
+        ease: "none"
+      }, 7.2);
+
+      tl.fromTo("#cta-container", {
+        opacity: 0,
+        y: 20,
+        scale: 0.92
+      }, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.9,
+        ease: "power3.out"
+      }, 7.4);
+
+      // 8. Final Fade Out to Black (9.3s - 10.0s)
+      tl.to("#root", {
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.in"
+      }, 9.3);
+
+      // Register timeline for Hyperframes runtime and seek to initial frame
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
